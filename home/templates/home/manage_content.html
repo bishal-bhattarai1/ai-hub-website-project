@@ -1,0 +1,36 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | PublishHub{% endblock %}
+
+{% block content %}
+<section class="admin-shell">
+    <div class="admin-heading">
+        <div>
+            <p class="eyebrow">PublishHub</p>
+            <h1>Website Publishing</h1>
+            <p>Create, update, and organize the content shown across the public website.</p>
+        </div>
+        <div class="admin-actions">
+            <a class="button secondary" href="{% url 'admin_panel' %}">Dashboard</a>
+            <a class="button secondary" href="{% url 'manage_inquiries' %}">Inquired Dashboard</a>
+            <a class="button secondary" href="{% url 'admin_analytics' %}">Analytcis</a>
+            <a class="button secondary" href="{% url 'custom_admin_logout' %}">Log out</a>
+        </div>
+    </div>
+
+    <div class="content-manager-grid">
+        {% for section in sections %}
+            <article class="admin-card">
+                <div class="admin-card-heading">
+                    <h2>{{ section.label }}</h2>
+                    <strong>{{ section.count }}</strong>
+                </div>
+                <div class="admin-actions">
+                    <a class="button primary" href="{% url 'add_content_item' section.key %}">Add new</a>
+                    <a class="button secondary" href="{% url 'content_items' section.key %}">Browse</a>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

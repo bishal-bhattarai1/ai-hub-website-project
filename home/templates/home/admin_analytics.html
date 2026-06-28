@@ -1,0 +1,184 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | Analytcis{% endblock %}
+
+{% block content %}
+<section class="admin-shell analytics-shell">
+    <div class="admin-heading analytics-heading">
+        <div>
+            <p class="eyebrow">Analytcis</p>
+            <h1>Performance Analytcis</h1>
+            <p>Track business activity, response progress, and website content health from one visual workspace.</p>
+        </div>
+        <div class="admin-actions">
+            <a class="button secondary" href="{% url 'manage_inquiries' %}">Inquired Dashboard</a>
+            <a class="button secondary" href="{% url 'manage_content' %}">PublishHub</a>
+            <a class="button secondary" href="{% url 'admin_panel' %}">Dashboard</a>
+        </div>
+    </div>
+
+    <section class="analytics-hero-panel">
+        <div>
+            <span class="section-kicker">Current Snapshot</span>
+            <h2>{{ week_inquiries }} inquiries received this week</h2>
+            <p>{{ responded_inquiries }} total inquiries have been responded to, with {{ new_inquiries }} still open for follow-up.</p>
+        </div>
+        <div class="analytics-response-meter" style="--meter: {{ response_rate }}%;">
+            <strong>{{ response_rate }}%</strong>
+            <span>Response rate</span>
+        </div>
+    </section>
+
+    <div class="analytics-stat-grid">
+        <article class="analytics-kpi-card">
+            <span>Total inquiries</span>
+            <strong>{{ total_inquiries }}</strong>
+            <small>All customer requests</small>
+        </article>
+        <article class="analytics-kpi-card">
+            <span>This week</span>
+            <strong>{{ week_inquiries }}</strong>
+            <small>New inquiries in 7 days</small>
+        </article>
+        <article class="analytics-kpi-card">
+            <span>Response rate</span>
+            <strong>{{ response_rate }}%</strong>
+            <small>{{ responded_inquiries }} responded, {{ new_inquiries }} open</small>
+        </article>
+        <article class="analytics-kpi-card">
+            <span>Content records</span>
+            <strong>{{ total_content }}</strong>
+            <small>Across website sections</small>
+        </article>
+    </div>
+
+    <div class="analytics-grid">
+        <section class="admin-card analytics-card analytics-card-wide">
+            <div class="admin-card-heading">
+                <div>
+                    <span class="section-kicker">Trend</span>
+                    <h2>Inquiry activity</h2>
+                </div>
+                <span class="analytics-chip">Last 7 days</span>
+            </div>
+            <div class="analytics-chart-frame">
+                <canvas id="inquiryChart" class="analytics-canvas" height="300"></canvas>
+            </div>
+        </section>
+
+        <section class="admin-card analytics-card">
+            <div class="admin-card-heading">
+                <div>
+                    <span class="section-kicker">Publishing</span>
+                    <h2>Content inventory</h2>
+                </div>
+            </div>
+            <div class="analytics-bars">
+                {% for item in content_counts %}
+                    <div class="analytics-bar-row">
+                        <span>{{ item.label }}</span>
+                        <div class="analytics-bar-track">
+                            <i style="width: {% widthratio item.value content_ratio_total 100 %}%"></i>
+                        </div>
+                        <strong>{{ item.value }}</strong>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="admin-card analytics-card">
+            <div class="admin-card-heading">
+                <div>
+                    <span class="section-kicker">Reviews</span>
+                    <h2>Review status</h2>
+                </div>
+                <a href="{% url 'content_items' 'reviews' %}">Manage</a>
+            </div>
+            <div class="analytics-review-grid">
+                {% for item in review_status %}
+                    <article>
+                        <span>{{ item.label }}</span>
+                        <strong>{{ item.value }}</strong>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="admin-card analytics-card">
+            <div class="admin-card-heading">
+                <div>
+                    <span class="section-kicker">Live Content</span>
+                    <h2>Published sections</h2>
+                </div>
+            </div>
+            <div class="analytics-mini-list">
+                <span><strong>{{ published_articles }}</strong><em>Published blogs</em></span>
+                <span><strong>{{ active_case_studies }}</strong><em>Active case studies</em></span>
+                <span><strong>{{ active_events }}</strong><em>Active events</em></span>
+            </div>
+        </section>
+    </div>
+</section>
+
+{{ inquiry_chart|json_script:"inquiry-chart-data" }}
+<script>
+    (function () {
+        const canvas = document.getElementById("inquiryChart");
+        const source = document.getElementById("inquiry-chart-data");
+        if (!canvas || !source) return;
+
+        const data = JSON.parse(source.textContent);
+        const ctx = canvas.getContext("2d");
+        const ratio = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = Math.max(rect.width * ratio, 320);
+        canvas.height = 300 * ratio;
+        ctx.scale(ratio, ratio);
+
+        const width = canvas.width / ratio;
+        const height = canvas.height / ratio;
+        const padding = 42;
+        const maxValue = Math.max(1, ...data.map((item) => item.value));
+        const barGap = 18;
+        const barWidth = (width - padding * 2 - barGap * (data.length - 1)) / data.length;
+
+        ctx.clearRect(0, 0, width, height);
+        ctx.strokeStyle = "#e6eeec";
+        ctx.lineWidth = 1;
+        for (let index = 0; index < 4; index += 1) {
+            const y = 34 + index * ((height - 100) / 3);
+            ctx.beginPath();
+            ctx.moveTo(padding, y);
+            ctx.lineTo(width - padding, y);
+            ctx.stroke();
+        }
+
+        ctx.font = "800 12px Inter, Arial, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        data.forEach((item, index) => {
+            const x = padding + index * (barWidth + barGap);
+            const barHeight = ((height - 112) * item.value) / maxValue;
+            const y = height - 58 - barHeight;
+            const radius = Math.min(10, barWidth / 2);
+            const gradient = ctx.createLinearGradient(0, y, 0, height - 58);
+            gradient.addColorStop(0, "#0f766e");
+            gradient.addColorStop(1, "#b7791f");
+
+            ctx.fillStyle = "#edf5f2";
+            ctx.beginPath();
+            ctx.roundRect(x, 34, barWidth, height - 92, radius);
+            ctx.fill();
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.roundRect(x, y, barWidth, barHeight || 5, radius);
+            ctx.fill();
+            ctx.fillStyle = "#102a2a";
+            ctx.fillText(item.value, x + barWidth / 2, Math.max(20, y - 13));
+            ctx.fillStyle = "#66736f";
+            ctx.fillText(item.label, x + barWidth / 2, height - 28);
+        });
+    })();
+</script>
+{% endblock %}

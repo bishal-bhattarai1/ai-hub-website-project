@@ -1,0 +1,48 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | Events{% endblock %}
+
+{% block content %}
+<section class="page-hero events-hero">
+    <p class="eyebrow">Events</p>
+    <h1>Workshops and sessions for AI-ready teams</h1>
+    <p>Join hands-on events for automation planning, chatbot design, and responsible AI practice.</p>
+    <div class="event-hero-summary" aria-label="Event status summary">
+        <span><strong>{{ upcoming_count }}</strong> Upcoming</span>
+        <span><strong>{{ past_count }}</strong> Session Ended</span>
+    </div>
+</section>
+
+<section class="section timeline">
+    {% for event in events %}
+        <article class="event-card event-card-{{ event.event_status_class }}">
+            <div class="event-date-block">
+                <span>{{ event.event_date|date:"M" }}</span>
+                <strong>{{ event.event_date|date:"j" }}</strong>
+                <small>{{ event.event_date|date:"Y" }}</small>
+            </div>
+            <div class="event-copy">
+                <div class="event-title-row">
+                    <h3>{{ event.title }}</h3>
+                </div>
+                <p>{{ event.description }}</p>
+            </div>
+            <div class="event-meta">
+                <span class="event-status {{ event.event_status_class }}">{{ event.event_status_label }}</span>
+                {% if event.location %}
+                    <span class="event-location">{{ event.location }}</span>
+                {% endif %}
+                {% if event.is_upcoming %}
+                    <a class="event-reserve" href="{% url 'contact' %}">Reserve Seat</a>
+                {% endif %}
+            </div>
+        </article>
+    {% empty %}
+        <article>
+            <span>Coming Soon</span>
+            <h3>No events are published yet</h3>
+            <p>New workshops and sessions will appear here after an admin adds active events.</p>
+        </article>
+    {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | Virtual Assistant{% endblock %}
+
+{% block content %}
+<section class="assistant-layout">
+    <div class="assistant-copy">
+        <p class="eyebrow">AI Virtual Assistant</p>
+        <h1>Ask AI Hub about services, projects, and next steps</h1>
+        <p>Clients can ask questions and receive automatic answers about AI Hub services.</p>
+    </div>
+    <div class="chat-panel" aria-label="AI virtual assistant preview">
+        <div class="chat-feed" id="chat-feed" aria-live="polite">
+            <div class="message assistant">Hi, I can help you find the right AI service. What would you like to know?</div>
+        </div>
+        <form class="chat-form" id="assistant-form" data-endpoint="{% url 'assistant_answer' %}">
+            {% csrf_token %}
+            <input id="assistant-question" type="text" placeholder="Type a question" aria-label="Type a question" autocomplete="off" required>
+            <button type="submit">Send</button>
+        </form>
+        <div class="quick-questions" aria-label="Suggested questions">
+            <button type="button" data-question="What services do you provide?">Services</button>
+            <button type="button" data-question="Do you build chatbots?">Chatbots</button>
+            <button type="button" data-question="How much does it cost?">Pricing</button>
+            <button type="button" data-question="Do you offer AI training?">Training</button>
+            <button type="button" data-question="How can I contact you?">Contact</button>
+            <button type="button" data-question="What are your hours?">Hours</button>
+        </div>
+    </div>
+</section>
+
+<script>
+    (() => {
+        const form = document.getElementById('assistant-form');
+        const feed = document.getElementById('chat-feed');
+        const input = document.getElementById('assistant-question');
+        const button = form.querySelector('button');
+        const csrfToken = form.querySelector('[name=csrfmiddlewaretoken]').value;
+        const quickQuestions = document.querySelectorAll('.quick-questions button');
+
+        const addMessage = (text, type) => {
+            const message = document.createElement('div');
+            message.className = `message ${type}`;
+            message.textContent = text;
+            feed.appendChild(message);
+            feed.scrollTop = feed.scrollHeight;
+            return message;
+        };
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const question = input.value.trim();
+            if (!question) {
+                return;
+            }
+
+            addMessage(question, 'user');
+            input.value = '';
+            input.disabled = true;
+            button.disabled = true;
+            const thinkingMessage = addMessage('Thinking...', 'assistant');
+
+            try {
+                const response = await fetch(form.dataset.endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken,
+                    },
+                    body: JSON.stringify({ question }),
+                });
+                const data = await response.json();
+                thinkingMessage.textContent = data.answer || data.error || 'Sorry, I could not answer that right now.';
+            } catch (error) {
+                thinkingMessage.textContent = 'Sorry, the assistant is unavailable right now.';
+            } finally {
+                input.disabled = false;
+                button.disabled = false;
+                input.focus();
+            }
+        });
+
+        quickQuestions.forEach((questionButton) => {
+            questionButton.addEventListener('click', () => {
+                input.value = questionButton.dataset.question || questionButton.textContent.trim();
+                form.requestSubmit();
+            });
+        });
+    })();
+</script>
+{% endblock %}

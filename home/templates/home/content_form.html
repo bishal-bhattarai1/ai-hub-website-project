@@ -1,0 +1,24 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | Save {{ config.label }}{% endblock %}
+
+{% block content %}
+<section class="admin-shell narrow-admin">
+    <div class="admin-heading">
+        <div>
+            <p class="eyebrow">PublishHub</p>
+            <h1>{% if instance %}Edit{% else %}Add{% endif %} {{ config.label }}</h1>
+            <p>Save the content details below.</p>
+        </div>
+    </div>
+
+    <form class="admin-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="admin-actions">
+            <button type="submit">Save</button>
+            <a class="button secondary" href="{% url 'content_items' content_type %}">Cancel</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

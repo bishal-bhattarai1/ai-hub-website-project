@@ -1,0 +1,42 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | Contact{% endblock %}
+
+{% block content %}
+<section class="contact-layout">
+    <div class="contact-intro">
+        <p class="eyebrow">Contact Us</p>
+        <h1>Tell us what you want AI to improve</h1>
+        <p>Share your requirements and the team will follow up. No login or account is needed.</p>
+        <div class="contact-details">
+            <span><strong>Email</strong> aihub@gmail.com</span>
+            <span><strong>Phone</strong> +977 98011101011</span>
+            <span><strong>Hours</strong> Monday to Friday, 9:00 AM - 5:00 PM</span>
+        </div>
+    </div>
+    <form class="contact-form" method="post">
+        {% csrf_token %}
+        <div class="form-header">
+            <span class="form-kicker">Project request</span>
+            <h2>Send your details</h2>
+        </div>
+        {% if messages %}
+            <div class="form-message success">
+                {% for message in messages %}
+                    <span>{{ message }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="form-grid">
+            <label>Name{{ form.name }}{{ form.name.errors }}</label>
+            <label>Email{{ form.email }}{{ form.email.errors }}</label>
+            <label>Phone number{{ form.phone }}{{ form.phone.errors }}</label>
+            <label>Company name{{ form.company }}{{ form.company.errors }}</label>
+            <label>Country{{ form.country }}{{ form.country.errors }}</label>
+            <label>Job title{{ form.job_title }}{{ form.job_title.errors }}</label>
+            <label class="full-field">Job details / requirements{{ form.job_details }}{{ form.job_details.errors }}</label>
+        </div>
+        <button type="submit">Submit request</button>
+    </form>
+</section>
+{% endblock %}

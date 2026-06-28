@@ -1,0 +1,30 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | Create Post{% endblock %}
+
+{% block content %}
+<section class="admin-shell narrow-admin">
+    <div class="admin-heading">
+        <div>
+            <p class="eyebrow">Write a blog</p>
+            <h1>Create Post</h1>
+            <p>Write your article and publish it to the Blog page.</p>
+        </div>
+        <div class="admin-actions">
+            <a class="button secondary" href="{% url 'blog' %}">Back to Blog</a>
+        </div>
+    </div>
+
+    <form class="contact-form" method="post">
+        {% csrf_token %}
+        <div class="form-header">
+            <span class="form-kicker">New article</span>
+            <h2>Blog details</h2>
+        </div>
+        <label>Title{{ form.title }}{{ form.title.errors }}</label>
+        <label>Summary{{ form.summary }}{{ form.summary.errors }}</label>
+        <label>Content{{ form.content }}{{ form.content.errors }}</label>
+        <button type="submit">Publish Blog</button>
+    </form>
+</section>
+{% endblock %}

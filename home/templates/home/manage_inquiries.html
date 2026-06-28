@@ -1,0 +1,78 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | Inquired Dashboard{% endblock %}
+
+{% block content %}
+<section class="admin-shell">
+    <div class="admin-heading">
+        <div>
+            <p class="eyebrow">Inquired Dashboard</p>
+            <h1>Client Conversations</h1>
+            <p>Review new messages, filter by status, and keep every follow-up moving clearly.</p>
+        </div>
+        <div class="admin-actions">
+            <a class="button secondary" href="{% url 'admin_panel' %}">Dashboard</a>
+            <a class="button secondary" href="{% url 'manage_content' %}">PublishHub</a>
+            <a class="button secondary" href="{% url 'admin_analytics' %}">Analytcis</a>
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="form-message success">
+            {% for message in messages %}
+                <span>{{ message }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form class="filter-bar" method="get">
+        <input type="search" name="q" value="{{ query }}" placeholder="Search name, email, company, country, title, details">
+        <select name="status">
+            <option value="">All statuses</option>
+            <option value="new" {% if status == 'new' %}selected{% endif %}>New</option>
+            <option value="responded" {% if status == 'responded' %}selected{% endif %}>Responded</option>
+        </select>
+        <button type="submit">Apply filter</button>
+    </form>
+
+    <div class="inquiry-table">
+        <div class="inquiry-row inquiry-head">
+            <span>Client</span>
+            <span>Company</span>
+            <span>Requirement</span>
+            <span>Status</span>
+            <span>Actions</span>
+        </div>
+        {% for inquiry in inquiries %}
+            <article class="inquiry-row">
+                <div>
+                    <strong>{{ inquiry.name }}</strong>
+                    <span>{{ inquiry.email }}</span>
+                    <span>{{ inquiry.phone }}</span>
+                </div>
+                <div>
+                    <strong>{{ inquiry.company }}</strong>
+                    <span>{{ inquiry.country }}</span>
+                    <span>{{ inquiry.job_title }}</span>
+                </div>
+                <p>{{ inquiry.job_details }}</p>
+                <span class="status-pill {{ inquiry.status }}">{{ inquiry.get_status_display }}</span>
+                <div class="row-actions">
+                    {% if inquiry.status != 'responded' %}
+                        <form method="post" action="{% url 'mark_inquiry_responded' inquiry.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="small-button">Mark responded</button>
+                        </form>
+                    {% endif %}
+                    <form method="post" action="{% url 'delete_inquiry' inquiry.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="small-button danger">Delete</button>
+                    </form>
+                </div>
+            </article>
+        {% empty %}
+            <div class="empty-state table-empty">No inquiries match your filters.</div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

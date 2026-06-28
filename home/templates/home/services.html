@@ -1,0 +1,68 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | Services{% endblock %}
+
+{% block content %}
+<section class="page-hero service-hero">
+    <p class="eyebrow">Services</p>
+    <h1>AI services for teams that need useful outcomes</h1>
+    <p>Choose focused support for automation, data products, virtual assistants, and AI adoption.</p>
+    <div class="actions">
+        <a class="button primary" href="{% url 'contact' %}">Start a Project</a>
+        <a class="button secondary" href="{% url 'assistant' %}">Ask the Assistant</a>
+    </div>
+</section>
+
+<section class="section services-section">
+    <div class="section-heading">
+        <p class="eyebrow">What We Build</p>
+        <h2>Practical AI support from first idea to working system</h2>
+    </div>
+
+    <div class="service-grid">
+        {% for service in services %}
+            <article class="service-card">
+                <span class="service-number">{{ forloop.counter|stringformat:"02d" }}</span>
+                <h3>{{ service.title }}</h3>
+                <p>{{ service.description }}</p>
+                <a href="{% url 'contact' %}">Discuss this service</a>
+            </article>
+        {% empty %}
+            {% for service in fallback_services %}
+                <article class="service-card">
+                    <span class="service-number">{{ forloop.counter|stringformat:"02d" }}</span>
+                    <h3>{{ service.title }}</h3>
+                    <p>{{ service.description }}</p>
+                    <a href="{% url 'contact' %}">Discuss this service</a>
+                </article>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section service-process">
+    <div class="process-panel">
+        <div>
+            <p class="eyebrow">How It Works</p>
+            <h2>Simple, focused, and built around your workflow</h2>
+        </div>
+        <div class="process-steps">
+            <article>
+                <strong>01</strong>
+                <h3>Discover</h3>
+                <p>Clarify goals, users, data, risks, and where AI can create useful value.</p>
+            </article>
+            <article>
+                <strong>02</strong>
+                <h3>Prototype</h3>
+                <p>Build a small working version so the team can test the experience early.</p>
+            </article>
+            <article>
+                <strong>03</strong>
+                <h3>Launch</h3>
+                <p>Refine, integrate, and support the system so it fits everyday work.</p>
+            </article>
+        </div>
+    </div>
+</section>
+{% endblock %}

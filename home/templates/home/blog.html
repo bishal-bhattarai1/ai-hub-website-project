@@ -1,0 +1,54 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | Blog{% endblock %}
+
+{% block content %}
+<section class="page-hero blog-hero">
+    <p class="eyebrow">Articles</p>
+    <h1>Practical writing on AI adoption and automation</h1>
+    <p>Guides, viewpoints, and implementation notes for teams building with AI.</p>
+</section>
+
+<section class="section">
+    <div>
+        <div class="section-heading">
+            <p class="eyebrow">Latest Posts</p>
+            <h2>Admin published articles</h2>
+        </div>
+        <div class="grid two">
+            {% for article in articles %}
+                <article class="card blog-card">
+                    <span class="date">
+                        {% if article.published_at %}
+                            {{ article.published_at|date:"M Y" }}
+                        {% else %}
+                            {{ article.created_at|date:"M Y" }}
+                        {% endif %}
+                    </span>
+                    <h3>{{ article.title }}</h3>
+                    <p>{{ article.summary }}</p>
+                    <details>
+                        <summary>Read blog</summary>
+                        <div>{{ article.content|linebreaks }}</div>
+                    </details>
+                </article>
+            {% empty %}
+                <article class="card">
+                    <span class="date">Coming Soon</span>
+                    <h3>No blogs published yet</h3>
+                    <p>Articles added from the admin panel will appear here.</p>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="form-message success blog-message">
+            {% for message in messages %}
+                <span>{{ message }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+</section>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | Gallery{% endblock %}
+
+{% block content %}
+<section class="page-hero gallery-hero">
+    <p class="eyebrow">Gallery</p>
+    <h1>Snapshots from AI workshops, dashboards, and product builds</h1>
+    <p>A look at the kinds of interfaces and working sessions AI Hub supports.</p>
+</section>
+
+<section class="section gallery-grid">
+    {% for image in images %}
+        <article class="gallery-item">
+            {% if image.image %}
+                <img src="{{ image.image.url }}" alt="{{ image.title }}">
+            {% elif image.image_url %}
+                <img src="{{ image.image_url }}" alt="{{ image.title }}">
+            {% endif %}
+            <div class="gallery-caption">
+                <h2>{{ image.title }}</h2>
+                {% if image.caption %}
+                    <p>{{ image.caption }}</p>
+                {% endif %}
+            </div>
+        </article>
+    {% empty %}
+        <div class="empty-state gallery-empty">No gallery photos have been uploaded yet.</div>
+    {% endfor %}
+</section>
+{% endblock %}

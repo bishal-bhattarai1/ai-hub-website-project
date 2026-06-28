@@ -1,0 +1,24 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | Admin Login{% endblock %}
+
+{% block content %}
+<section class="login-shell">
+    <form class="login-card" method="post">
+        {% csrf_token %}
+        <p class="eyebrow">Admin Only</p>
+        <h1>Sign in to AI Hub</h1>
+        <p>Use an authorized staff account to access the dashboard.</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="form-message error">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <label>Username<input type="text" name="username" autocomplete="username" required></label>
+        <label>Password<input type="password" name="password" autocomplete="current-password" required></label>
+        <button type="submit">Sign in</button>
+    </form>
+</section>
+{% endblock %}

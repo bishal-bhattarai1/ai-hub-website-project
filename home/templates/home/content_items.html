@@ -1,0 +1,73 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | {{ config.label }}{% endblock %}
+
+{% block content %}
+<section class="admin-shell">
+    <div class="admin-heading">
+        <div>
+            <p class="eyebrow">PublishHub</p>
+            <h1>{{ config.label }}</h1>
+        </div>
+        <div class="admin-actions">
+            <a class="button primary" href="{% url 'add_content_item' content_type %}">Add new</a>
+            <a class="button secondary" href="{% url 'manage_content' %}">PublishHub</a>
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="form-message success">
+            {% for message in messages %}
+                <span>{{ message }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form class="filter-bar content-filter" method="get">
+        <input type="search" name="q" value="{{ query }}" placeholder="Search {{ config.label|lower }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <div class="custom-table">
+        {% for item in items %}
+            <article class="custom-row">
+                <div>
+                    <strong>{{ item }}</strong>
+                    <span>
+                        {% if content_type == 'events' %}
+                            {{ item.event_date|date:"M j, Y" }} &middot; {{ item.event_status_label }}
+                        {% elif content_type == 'articles' and item.published_at %}
+                            {{ item.published_at|date:"M j, Y" }}
+                        {% elif content_type == 'case_studies' %}
+                            {{ item.created_at|date:"M j, Y" }}
+                        {% elif content_type == 'reviews' %}
+                            {{ item.get_status_display }} &middot; {{ item.created_at|date:"M j, Y" }}
+                        {% else %}
+                            {{ item.created_at|date:"M j, Y" }}
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="row-actions">
+                    {% if content_type == 'reviews' and item.status == 'pending' %}
+                        <form method="post" action="{% url 'approve_review' item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="small-button">Approve</button>
+                        </form>
+                        <form method="post" action="{% url 'decline_review' item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="small-button danger">Decline</button>
+                        </form>
+                    {% endif %}
+                    <a class="small-link" href="{% url 'edit_content_item' content_type item.id %}">Edit</a>
+                    <form method="post" action="{% url 'delete_content_item' content_type item.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="small-button danger">Delete</button>
+                    </form>
+                </div>
+            </article>
+        {% empty %}
+            <div class="empty-state table-empty">No records found.</div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

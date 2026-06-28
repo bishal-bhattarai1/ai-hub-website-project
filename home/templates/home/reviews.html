@@ -1,0 +1,89 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | Reviews{% endblock %}
+
+{% block content %}
+<section class="page-hero reviews-hero">
+    <p class="eyebrow">Customer Reviews</p>
+    <h1>Client feedback that keeps delivery accountable</h1>
+    <p>Read what clients say about AI Hub services, workshops, and project support.</p>
+</section>
+
+<section class="section event-reviews">
+    <div class="review-showcase-heading">
+        <h2>Recent reviews</h2>
+        <div class="review-controls" aria-hidden="true">
+            <span class="review-control disabled">&#8249;</span>
+            <span class="review-control">&#8250;</span>
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="form-message success">
+            {% for message in messages %}
+                <span>{{ message }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="review-layout">
+        <div class="review-list">
+            {% for review in reviews %}
+                <article class="quote review-card">
+                    <div class="review-card-body">
+                        <div class="review-author">
+                            <span class="review-avatar" aria-hidden="true">{{ review.customer_name|slice:"0:1"|upper }}</span>
+                            <div>
+                                <strong>{{ review.customer_name }}</strong>
+                                <span class="star-rating{% if review.rating <= 2 %} low-rating{% endif %}" aria-label="{{ review.rating }} out of 5 stars">
+                                    {% for star in "12345" %}
+                                        {% if forloop.counter <= review.rating %}
+                                            <span aria-hidden="true">&#9733;</span>
+                                        {% else %}
+                                            <span aria-hidden="true" class="empty-star">&#9733;</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </span>
+                            </div>
+                        </div>
+                        <p>{{ review.review }}</p>
+                    </div>
+                    <div class="review-company">
+                        <span class="review-company-logo" aria-hidden="true">{{ review.company|default:"AI"|slice:"0:1"|upper }}</span>
+                        <div>
+                            <strong>{{ review.company|default:"AI Hub" }}</strong>
+                            <span>{{ review.company|default:"aihub.local" }}</span>
+                        </div>
+                    </div>
+                </article>
+            {% empty %}
+                <article class="quote review-card">
+                    <div class="review-card-body">
+                        <div class="review-author">
+                            <span class="review-avatar" aria-hidden="true">A</span>
+                            <div>
+                                <strong>AI Hub</strong>
+                                <span class="star-rating" aria-label="5 out of 5 stars">
+                                    <span aria-hidden="true">&#9733;</span><span aria-hidden="true">&#9733;</span><span aria-hidden="true">&#9733;</span><span aria-hidden="true">&#9733;</span><span aria-hidden="true">&#9733;</span>
+                                </span>
+                            </div>
+                        </div>
+                        <p>No customer reviews have been shared yet.</p>
+                    </div>
+                    <div class="review-company">
+                        <span class="review-company-logo" aria-hidden="true">A</span>
+                        <div>
+                            <strong>AI Hub</strong>
+                            <span>aihub.local</span>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+        <a class="review-feedback-link" href="{% url 'submit_review' %}" aria-label="Share feedback">
+            <span class="review-feedback-logo" aria-hidden="true">+</span>
+            <span>Feedback form</span>
+        </a>
+    </div>
+</section>
+{% endblock %}

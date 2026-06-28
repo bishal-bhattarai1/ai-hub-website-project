@@ -1,0 +1,77 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | Case Studies{% endblock %}
+
+{% block content %}
+<section class="page-hero case-hero">
+    <p class="eyebrow">Past Projects</p>
+    <h1>Real AI solutions for everyday business problems</h1>
+    <p>See how AI Hub helps teams save time, respond faster, organize information, and make better decisions with practical AI systems.</p>
+    <div class="actions">
+        <a class="button primary" href="{% url 'contact' %}">Plan Similar Work</a>
+        <a class="button secondary" href="{% url 'services' %}">View Services</a>
+    </div>
+</section>
+
+<section class="section case-section">
+    <div class="section-heading">
+        <p class="eyebrow">Selected Work</p>
+        <h2>Practical projects with clear business value</h2>
+    </div>
+
+    <div class="case-grid">
+        {% for study in case_studies %}
+            <article class="case-card{% if forloop.first %} featured-case{% endif %}">
+                <h3>{{ study.title }}</h3>
+                <p>{{ study.summary }}</p>
+                {% if study.content %}
+                    <p>{{ study.content|linebreaksbr }}</p>
+                {% endif %}
+            </article>
+        {% empty %}
+            <article class="case-card featured-case">
+                <h3>Customer Support Chatbot</h3>
+                <p>Built a website chatbot that answers common questions, explains services, collects customer details, and guides visitors to the right next step.</p>
+            </article>
+
+            <article class="case-card">
+                <h3>Smart Document Processing</h3>
+                <p>Used AI to read forms, invoices, and uploaded documents, then extract important details for review and follow-up.</p>
+            </article>
+
+            <article class="case-card">
+                <h3>Business Insight Dashboard</h3>
+                <p>Created a reporting system that summarizes customer activity, service demand, and performance trends in one simple view.</p>
+            </article>
+
+            <article class="case-card">
+                <h3>Internal Knowledge Assistant</h3>
+                <p>Helped staff quickly find company procedures, templates, project notes, and answers without searching through many files or tools.</p>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section case-outcomes">
+    <div class="case-outcome-panel">
+        <div>
+            <p class="eyebrow">Delivery Pattern</p>
+            <h2>Every project starts with the problem, not the technology</h2>
+        </div>
+        <div class="outcome-list">
+            <article>
+                <strong>Understand the workflow</strong>
+                <p>We study the current process, common delays, repeated questions, and the places where AI can create real value.</p>
+            </article>
+            <article>
+                <strong>Build a useful pilot</strong>
+                <p>We create a working version using real business examples so the team can test the experience before scaling.</p>
+            </article>
+            <article>
+                <strong>Improve with feedback</strong>
+                <p>We review results, improve accuracy, refine handoffs, and make sure the solution fits daily business use.</p>
+            </article>
+        </div>
+    </div>
+</section>
+{% endblock %}

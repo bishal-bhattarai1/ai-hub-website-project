@@ -1,0 +1,178 @@
+{% extends 'home/base.html' %}
+
+{% block title %}AI Hub | Workspace{% endblock %}
+
+{% block content %}
+<section class="admin-shell">
+    <div class="dashboard-hero">
+        <div class="admin-heading">
+            <p class="eyebrow">Workspace</p>
+            <h1>AI Hub Dashboard</h1>
+            <p>Handle client conversations, publish website updates, review performance, and manage team access from one polished workspace.</p>
+            <div class="admin-actions">
+                <a class="button secondary" href="{% url 'manage_inquiries' %}">Inquired Dashboard</a>
+                <a class="button secondary" href="{% url 'manage_content' %}">PublishHub</a>
+                <a class="button secondary" href="{% url 'admin_analytics' %}">Analytcis</a>
+                <a class="button secondary" href="{% url 'custom_admin_logout' %}">Log out</a>
+            </div>
+        </div>
+        <aside class="dashboard-summary" aria-label="Dashboard summary">
+            <span>
+                <small>Open requests</small>
+                <strong>{{ new_inquiries }}</strong>
+            </span>
+            <span>
+                <small>Response rate</small>
+                <strong>{{ response_rate }}%</strong>
+            </span>
+            <span>
+                <small>Content records</small>
+                <strong>{{ total_content }}</strong>
+            </span>
+        </aside>
+    </div>
+
+    <div class="stat-grid">
+        <article class="stat-card">
+            <span>Total inquiries</span>
+            <strong>{{ total_inquiries }}</strong>
+            <small>All customer requests</small>
+        </article>
+        <article class="stat-card">
+            <span>Needs attention</span>
+            <strong>{{ new_inquiries }}</strong>
+            <small>Waiting for a response</small>
+        </article>
+        <article class="stat-card">
+            <span>Today</span>
+            <strong>{{ today_inquiries }}</strong>
+            <small>New requests today</small>
+        </article>
+        <article class="stat-card">
+            <span>Last 7 days</span>
+            <strong>{{ week_inquiries }}</strong>
+            <small>Recent inquiry volume</small>
+        </article>
+        <article class="stat-card">
+            <span>Responded</span>
+            <strong>{{ responded_inquiries }}</strong>
+            <small>{{ response_rate }}% completion rate</small>
+        </article>
+        <article class="stat-card">
+            <span>Pending reviews</span>
+            <strong>{{ pending_reviews }}</strong>
+            <small>Awaiting approval</small>
+        </article>
+    </div>
+
+    <section class="quick-actions" aria-label="Admin quick actions">
+        <a href="{% url 'manage_inquiries' %}">
+            <span class="action-icon">01</span>
+            <strong>Inquired Dashboard</strong>
+            <small>Read, search, and close client inquiries</small>
+        </a>
+        <a href="{% url 'manage_content' %}">
+            <span class="action-icon">02</span>
+            <strong>PublishHub</strong>
+            <small>Edit blogs, services, events, gallery, and case studies</small>
+        </a>
+        <a href="{% url 'content_items' 'reviews' %}">
+            <span class="action-icon">03</span>
+            <strong>Review desk</strong>
+            <small>Moderate customer feedback</small>
+        </a>
+        <a href="{% url 'admin_analytics' %}">
+            <span class="action-icon">04</span>
+            <strong>Analytcis</strong>
+            <small>View graphs and activity trends</small>
+        </a>
+        <a href="{% url 'user_access' %}">
+            <span class="action-icon">05</span>
+            <strong>Team roles</strong>
+            <small>Manage staff accounts</small>
+        </a>
+    </section>
+
+    <div class="admin-grid">
+        <section class="admin-card">
+            <div class="admin-card-heading">
+                <div>
+                    <span class="section-kicker">Requests</span>
+                    <h2>Recent Client Messages</h2>
+                </div>
+                <a href="{% url 'manage_inquiries' %}">Open inbox</a>
+            </div>
+            <div class="admin-list">
+                {% for inquiry in recent_inquiries %}
+                    <article>
+                        <div>
+                            <strong>{{ inquiry.name }}</strong>
+                            <span>{{ inquiry.company }} &middot; {{ inquiry.email }}</span>
+                        </div>
+                        <span class="status-pill {{ inquiry.status }}">{{ inquiry.get_status_display }}</span>
+                    </article>
+                {% empty %}
+                    <p class="empty-state">No customer inquiries yet.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="admin-card">
+            <div class="admin-card-heading">
+                <div>
+                    <span class="section-kicker">Website</span>
+                    <h2>PublishHub</h2>
+                </div>
+                <a href="{% url 'manage_content' %}">Open studio</a>
+            </div>
+            <div class="content-links">
+                <a href="{% url 'content_items' 'services' %}">Services <strong>{{ content_counts.services }}</strong></a>
+                <a href="{% url 'content_items' 'articles' %}">Articles <strong>{{ content_counts.articles }}</strong></a>
+                <a href="{% url 'content_items' 'case_studies' %}">Case studies <strong>{{ content_counts.case_studies }}</strong></a>
+                <a href="{% url 'content_items' 'events' %}">Events <strong>{{ content_counts.events }}</strong></a>
+                <a href="{% url 'content_items' 'gallery' %}">Gallery images <strong>{{ content_counts.gallery }}</strong></a>
+                <a href="{% url 'content_items' 'reviews' %}">Customer reviews <strong>{{ content_counts.reviews }}</strong></a>
+            </div>
+        </section>
+    </div>
+
+    <section class="admin-card">
+        <div class="admin-card-heading">
+            <div>
+                <span class="section-kicker">Editorial</span>
+                <h2>Recent Blog Posts</h2>
+            </div>
+            <a href="{% url 'content_items' 'articles' %}">Open blogs</a>
+        </div>
+        <div class="admin-list">
+            {% for article in recent_articles %}
+                <article>
+                    <div>
+                        <strong>{{ article.title }}</strong>
+                        <span>
+                            {% if article.is_published %}Published{% else %}Draft{% endif %}
+                            {% if article.published_at %} &middot; {{ article.published_at|date:"M j, Y" }}{% endif %}
+                        </span>
+                    </div>
+                    <span class="status-pill {% if not article.is_published %}responded{% endif %}">
+                        {% if article.is_published %}Live{% else %}Draft{% endif %}
+                    </span>
+                </article>
+            {% empty %}
+                <p class="empty-state">No blogs yet.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="admin-card">
+        <div class="admin-card-heading">
+            <div>
+                <span class="section-kicker">Security</span>
+                <h2>Team Roles</h2>
+            </div>
+            <a href="{% url 'user_access' %}">Open roles</a>
+        </div>
+        <p class="admin-note">Only staff users can open this panel. Create admin-only accounts and control access from the custom user access page.</p>
+    </section>
+</section>
+{% endblock %}
