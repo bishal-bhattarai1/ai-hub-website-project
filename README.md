@@ -203,8 +203,8 @@ Default database values in `ai_hub/settings.py` are:
 
 ```text
 Database name: ai_hub
-Database user: postgres
-Database password: 0138
+Database user: your_user
+Database password: your_password
 Database host: localhost
 Database port: 5432
 ```
@@ -233,7 +233,7 @@ POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 ```
 
-Important: if your PostgreSQL password is not `0138`, you must set `POSTGRES_PASSWORD` in `.env`.
+Important: Set the  PostgreSQL passwor `POSTGRES_PASSWORD` in `.env`.
 
 ### Step 7: Run Database Migrations
 
