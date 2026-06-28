@@ -12,7 +12,7 @@
 
         {% if messages %}
             {% for message in messages %}
-                <div class="form-message error">{{ message }}</div>
+                <div class="form-message {{ message.tags }}">{{ message }}</div>
             {% endfor %}
         {% endif %}
 

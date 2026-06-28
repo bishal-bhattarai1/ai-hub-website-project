@@ -58,8 +58,8 @@
                             <button type="submit" class="small-button danger">Decline</button>
                         </form>
                     {% endif %}
-                    <a class="small-link" href="{% url 'edit_content_item' content_type item.id %}">Edit</a>
-                    <form method="post" action="{% url 'delete_content_item' content_type item.id %}">
+                    <a class="small-link" href="{% url 'edit_content_item' content_type item.id %}" onclick="return confirm('Are you sure you want to edit it?');">Edit</a>
+                    <form method="post" action="{% url 'delete_content_item' content_type item.id %}" onsubmit="return confirm('Are you sure you want to delete it?');">
                         {% csrf_token %}
                         <button type="submit" class="small-button danger">Delete</button>
                     </form>

@@ -1540,6 +1540,17 @@ label {
     list-style: none;
 }
 
+.password-match-error {
+    color: var(--coral);
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.admin-form input.field-error {
+    border-color: var(--coral);
+    background: #fff4f2;
+}
+
 .contact-details {
     display: grid;
     gap: 12px;
@@ -2139,6 +2150,12 @@ label {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+}
+
+.admin-list article .row-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .small-button {

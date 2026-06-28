@@ -166,7 +166,7 @@
         <script>
             (() => {
                 const timeoutMs = 120000;
-                const logoutUrl = "{% url 'custom_admin_logout' %}";
+                const logoutUrl = "{% url 'custom_admin_logout' %}?timeout=1";
                 let timeoutId;
 
                 const resetTimer = () => {

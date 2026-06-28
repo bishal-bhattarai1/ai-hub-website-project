@@ -47,6 +47,7 @@ urlpatterns = [
     path('admin-panel/reviews/<int:review_id>/approve/', views.approve_review, name='approve_review'),
     path('admin-panel/reviews/<int:review_id>/decline/', views.decline_review, name='decline_review'),
     path('admin-panel/users/', views.user_access, name='user_access'),
+    path('admin-panel/users/<int:user_id>/delete/', views.delete_admin_user, name='delete_admin_user'),
 ]
 
 if settings.DEBUG:

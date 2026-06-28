@@ -397,40 +397,9 @@ def assistant_answer(request):
     if quick_answer:
         return JsonResponse({'answer': quick_answer})
 
-    if not os.environ.get('OPENAI_API_KEY'):
-        return JsonResponse({
-            'error': 'AI assistant is temporarily unavailable. Please contact support to enable this feature.',
-        }, status=503)
-
-    try:
-        from openai import OpenAI
-
-        client = OpenAI(timeout=getattr(settings, 'OPENAI_TIMEOUT', 20))
-        response = client.responses.create(
-            model=getattr(settings, 'OPENAI_MODEL', 'gpt-4.1-mini'),
-            max_output_tokens=getattr(settings, 'OPENAI_MAX_OUTPUT_TOKENS', 220),
-            instructions=(
-                'You are the AI Hub website assistant. Answer client questions clearly and briefly. '
-                'Keep replies under 80 words unless the client explicitly asks for detail. '
-                'Use only the provided AI Hub context as your business knowledge. You may summarize, '
-                'compare, and recommend services from that context. If a question needs information not '
-                'included in the context, project-specific pricing, private data, or a human decision, '
-                'say that AI Hub should be contacted directly. Do not invent policies, prices, dates, '
-                'case studies, or guarantees.'
-            ),
-            input=f'{get_assistant_context()}\n\nClient question: {question}',
-        )
-    except ImportError:
-        return JsonResponse({
-            'error': 'OpenAI SDK is not installed. Run pip install -r requirements.txt.',
-        }, status=503)
-    except Exception:
-        return JsonResponse({
-            'error': 'Please choose below given options or contact our support team.',
-        }, status=502)
-
-    answer = response.output_text.strip()
-    return JsonResponse({'answer': answer})
+    return JsonResponse({
+        'answer': 'Please choose below given options or contact our support team.',
+    })
 
 
 def contact(request):
@@ -466,6 +435,10 @@ def custom_admin_login(request):
 
 def custom_admin_logout(request):
     logout(request)
+    if request.GET.get('timeout') == '1':
+        messages.error(request, 'Your admin session expired after 2 minutes of inactivity. Please log in again.')
+    else:
+        messages.success(request, 'Admin was logged out successfully and redirected to the admin login page.')
     return redirect('custom_admin_login')
 
 
@@ -658,7 +631,7 @@ def content_form(request, content_type, object_id=None):
         form = config['form'](request.POST, request.FILES, instance=instance)
         if form.is_valid():
             form.save()
-            messages.success(request, f'{config["label"]} item saved.')
+            messages.success(request, f'{config["label"]} item saved successfully.')
             return redirect('content_items', content_type=content_type)
     else:
         form = config['form'](instance=instance)
@@ -719,3 +692,23 @@ def user_access(request):
         'form': form,
         'users': User.objects.order_by('username'),
     })
+
+
+@admin_required
+@require_POST
+def delete_admin_user(request, user_id):
+    User = get_user_model()
+    user = get_object_or_404(User, id=user_id)
+
+    if user.id == request.user.id:
+        messages.error(request, 'You cannot delete the main admin account while logged in.')
+        return redirect('user_access')
+
+    if user.is_staff and User.objects.filter(is_staff=True).count() <= 1:
+        messages.error(request, 'At least one admin user must remain.')
+        return redirect('user_access')
+
+    username = user.username
+    user.delete()
+    messages.success(request, f'Admin user "{username}" deleted.')
+    return redirect('user_access')
