@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Hub | Admin Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="/"><span class="brand-mark">AI</span><span>AI Hub</span></a>
+        <nav class="nav" aria-label="Main navigation">
+            <a href="/">Home</a><a href="/services">Services</a><a href="/case-studies">Case Studies</a><a href="/reviews">Reviews</a><a href="/blog">Blog</a><a href="/gallery">Gallery</a><a href="/events">Events</a><a href="/contact">Contact</a><a href="/admin-login" aria-current="page">Admin</a>
+        </nav>
+    </header>
+    <main>
+        <section class="admin-login-shell">
+            <form class="admin-login-card" id="admin-login-form">
+                <span class="form-kicker">Admin access</span>
+                <h1>Sign in to AI Hub</h1>
+                <p class="form-message success" id="admin-login-message" hidden></p>
+                <label>Username<input type="text" name="username" value="useradmin" autocomplete="username" required></label>
+                <label>Password<input type="password" name="password" placeholder="Enter password" autocomplete="current-password" required></label>
+                <button type="submit">Log in</button>
+                <p class="admin-demo-note">Static Vercel preview only. Real authentication stays in Django.</p>
+            </form>
+        </section>
+    </main>
+    <footer class="site-footer"><span>AI Hub</span><span>Practical AI solutions, training, and automation support.</span></footer>
+    <script src="/js/site.js"></script>
+</body>
+</html>
+

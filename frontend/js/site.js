@@ -107,10 +107,29 @@ function setupStaticContactForm() {
     });
 }
 
+function setupStaticAdminLogin() {
+    const form = document.getElementById('admin-login-form');
+    const message = document.getElementById('admin-login-message');
+    if (!form) {
+        return;
+    }
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (message) {
+            message.hidden = false;
+            message.textContent = 'Frontend-only demo login accepted. Opening the static admin dashboard.';
+        }
+        window.setTimeout(() => {
+            window.location.href = '/admin-panel';
+        }, 350);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     setupWidget();
     setupChat('assistant-widget-form', 'assistant-widget-feed', 'assistant-widget-question', '.assistant-widget-questions button');
     setupChat('assistant-form', 'chat-feed', 'assistant-question', '.quick-questions button');
     setupStaticContactForm();
+    setupStaticAdminLogin();
 });
-

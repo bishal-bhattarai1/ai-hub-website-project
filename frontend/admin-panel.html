@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Hub | Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="/"><span class="brand-mark">AI</span><span>AI Hub</span></a>
+        <nav class="nav" aria-label="Main navigation">
+            <a href="/">Home</a><a href="/services">Services</a><a href="/case-studies">Case Studies</a><a href="/reviews">Reviews</a><a href="/blog">Blog</a><a href="/gallery">Gallery</a><a href="/events">Events</a><a href="/contact">Contact</a><a href="/admin-panel" aria-current="page">Admin</a>
+        </nav>
+    </header>
+    <main>
+        <section class="page-hero admin-hero">
+            <p class="eyebrow">Admin Workspace</p>
+            <h1>Manage AI Hub content and inquiries</h1>
+            <p>Static preview of the admin dashboard for Vercel. Live records are managed in the Django backend.</p>
+            <div class="actions"><a class="button primary" href="/manage-inquiries">Inquiries</a><a class="button secondary" href="/manage-content">Content</a><a class="button secondary" href="/admin-analytics">Analytics</a><a class="button secondary" href="/admin-login">Log out</a></div>
+        </section>
+        <section class="section admin-dashboard-grid">
+            <article class="admin-stat-card"><span>New inquiries</span><strong>6</strong><small>Need follow-up</small></article>
+            <article class="admin-stat-card"><span>Response rate</span><strong>82%</strong><small>Demo metric</small></article>
+            <article class="admin-stat-card"><span>Total content</span><strong>24</strong><small>Services, blogs, events</small></article>
+            <article class="admin-stat-card"><span>Pending reviews</span><strong>3</strong><small>Awaiting approval</small></article>
+        </section>
+        <section class="section admin-action-grid">
+            <a class="admin-action-card" href="/manage-inquiries"><strong>Inquired Dashboard</strong><span>Review contact requests and follow-up status.</span></a>
+            <a class="admin-action-card" href="/manage-content"><strong>PublishHub</strong><span>Manage public website content sections.</span></a>
+            <a class="admin-action-card" href="/admin-analytics"><strong>Analytics</strong><span>View inquiry and content performance.</span></a>
+            <a class="admin-action-card" href="/user-access"><strong>Team Roles</strong><span>Preview admin user access and roles.</span></a>
+        </section>
+    </main>
+    <footer class="site-footer"><span>AI Hub</span><span>Practical AI solutions, training, and automation support.</span></footer>
+    <script src="/js/site.js"></script>
+</body>
+</html>
+
