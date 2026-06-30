@@ -2,5 +2,5 @@ services:
   - type: web
     name: my-django-site
     env: python
-    buildCommand: "./build.sh"
+    buildCommand: "bash build.sh"
     startCommand: "gunicorn ai_hub.wsgi:application"
