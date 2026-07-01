@@ -130,7 +130,7 @@ class PublicCustomerReviewForm(forms.ModelForm):
             'company': forms.TextInput(attrs={'placeholder': 'Company or organization'}),
             'review': forms.Textarea(attrs={
                 'rows': 5,
-                'placeholder': 'Share your experience with AI Hub.',
+                'placeholder': 'Share your experience with AI Solution.',
             }),
         }
 

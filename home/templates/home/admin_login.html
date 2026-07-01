@@ -1,13 +1,13 @@
 {% extends 'home/base.html' %}
 
-{% block title %}AI Hub | Admin Login{% endblock %}
+{% block title %}AI Solution | Admin Login{% endblock %}
 
 {% block content %}
 <section class="login-shell">
     <form class="login-card" method="post">
         {% csrf_token %}
         <p class="eyebrow">Admin Only</p>
-        <h1>Sign in to AI Hub</h1>
+        <h1>Sign in to AI Solution</h1>
         <p>Use an authorized staff account to access the dashboard.</p>
 
         {% if messages %}

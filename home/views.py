@@ -265,13 +265,13 @@ def build_assistant_context():
     ]
 
     return '\n\n'.join(filter(None, [
-        'AI Hub helps clients with practical AI services.',
+        'AI Solution helps clients with practical AI services.',
         format_context_block('Services', service_lines),
         format_context_block('Published articles', article_lines),
         format_context_block('Upcoming or active events', event_lines),
         format_context_block('Customer reviews', review_lines),
         format_context_block('Gallery notes', gallery_lines),
-        'Contact email: aihub@gmail.com\nPhone: +977 98011101011',
+        'Contact email: aisolution@gmail.com\nPhone: +977 98011101011',
         'Hours: Monday to Friday, 9:00 AM - 5:00 PM',
     ]))
 
@@ -294,10 +294,10 @@ ASSISTANT_FAQS = [
         'questions': [
             'what services do you provide',
             'what do you do',
-            'what can ai hub help with',
+            'what can ai solution help with',
         ],
         'answer': (
-            'AI Hub helps with AI consulting, workflow automation, custom chatbots, '
+            'AI Solution helps with AI consulting, workflow automation, custom chatbots, '
             'data intelligence, and practical AI training for teams.'
         ),
     },
@@ -308,7 +308,7 @@ ASSISTANT_FAQS = [
             'can you make virtual assistant',
         ],
         'answer': (
-            'Yes. AI Hub builds custom chatbots and virtual assistants for websites, '
+            'Yes. AI Solution builds custom chatbots and virtual assistants for websites, '
             'support teams, internal knowledge, FAQs, and business workflows.'
         ),
     },
@@ -319,7 +319,7 @@ ASSISTANT_FAQS = [
             'what is your email',
             'what is your phone number',
         ],
-        'answer': 'You can contact AI Hub at aihub@gmail.com or call +977 98011101011.',
+        'answer': 'You can contact AI Solution at aisolution@gmail.com or call +977 98011101011.',
     },
     {
         'questions': [
@@ -328,7 +328,7 @@ ASSISTANT_FAQS = [
             'working hours',
             'business hours',
         ],
-        'answer': 'AI Hub is available Monday to Friday, 9:00 AM - 5:00 PM.',
+        'answer': 'AI Solution is available Monday to Friday, 9:00 AM - 5:00 PM.',
     },
     {
         'questions': [
@@ -339,7 +339,7 @@ ASSISTANT_FAQS = [
         ],
         'answer': (
             'Pricing depends on the project scope, timeline, and required integrations. '
-            'Please contact AI Hub with your requirements for a proper estimate.'
+            'Please contact AI Solution with your requirements for a proper estimate.'
         ),
     },
     {
@@ -350,7 +350,7 @@ ASSISTANT_FAQS = [
             'workshops',
         ],
         'answer': (
-            'Yes. AI Hub offers practical AI training, workshops, adoption roadmaps, '
+            'Yes. AI Solution offers practical AI training, workshops, adoption roadmaps, '
             'and responsible AI guidance for teams.'
         ),
     },
@@ -363,7 +363,7 @@ ASSISTANT_FAQS = [
         ],
         'answer': (
             'Start by sharing your goals, workflow, and main pain points through the contact form. '
-            'AI Hub can then recommend the right service or project path.'
+            'AI Solution can then recommend the right service or project path.'
         ),
     },
 ]

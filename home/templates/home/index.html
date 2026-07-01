@@ -1,19 +1,19 @@
 {% extends 'home/base.html' %}
 
-{% block title %}AI Hub | Home{% endblock %}
+{% block title %}AI Solution | Home{% endblock %}
 
 {% block content %}
 <section class="hero home-hero">
     <div class="hero-copy">
         <p class="eyebrow">AI strategy and implementation</p>
-        <h1>AI Hub</h1>
+        <h1>AI Solution</h1>
         <p>Build smarter services, automate daily work, and launch AI experiences that customers can actually use.</p>
         <div class="actions">
             <a class="button primary" href="{% url 'services' %}">Explore Services</a>
             <a class="button secondary" href="{% url 'assistant' %}">Ask the Assistant</a>
         </div>
     </div>
-    <div class="hero-summary" aria-label="AI Hub highlights">
+    <div class="hero-summary" aria-label="AI Solution highlights">
         <span><strong>{{ stats.services }}</strong> Active services</span>
         <span><strong>{{ stats.articles }}</strong> Published articles</span>
         <span><strong>{{ stats.events }}</strong> Upcoming sessions</span>
@@ -57,7 +57,7 @@
         <div>
             <p class="eyebrow">Current Work</p>
             <h2>Useful ideas, real feedback, and next steps</h2>
-            <p>Browse recent thinking from AI Hub, then start a conversation when you are ready to shape your own workflow.</p>
+            <p>Browse recent thinking from AI Solution, then start a conversation when you are ready to shape your own workflow.</p>
             <div class="actions">
                 <a class="button primary" href="{% url 'contact' %}">Start a Project</a>
                 <a class="button secondary" href="{% url 'blog' %}">Read Blog</a>
@@ -85,7 +85,7 @@
 <section class="section home-proof">
     <div class="section-heading">
         <p class="eyebrow">Customer Feedback</p>
-        <h2>Teams use AI Hub for clear, practical delivery</h2>
+        <h2>Teams use AI Solution for clear, practical delivery</h2>
     </div>
     <div class="review-list">
         {% for review in reviews %}
@@ -111,8 +111,8 @@
                 <div class="review-company">
                     <span class="review-company-logo" aria-hidden="true">{{ review.company|default:"AI"|slice:"0:1"|upper }}</span>
                     <div>
-                        <strong>{{ review.company|default:"AI Hub" }}</strong>
-                        <span>{{ review.company|default:"aihub.local" }}</span>
+                        <strong>{{ review.company|default:"AI Solution" }}</strong>
+                        <span>{{ review.company|default:"aisolution.local" }}</span>
                     </div>
                 </div>
             </article>
@@ -131,8 +131,8 @@
                 <div class="review-company">
                     <span class="review-company-logo" aria-hidden="true">A</span>
                     <div>
-                        <strong>AI Hub</strong>
-                        <span>aihub.local</span>
+                        <strong>AI Solution</strong>
+                        <span>aisolution.local</span>
                     </div>
                 </div>
             </article>
@@ -150,8 +150,8 @@
                 <div class="review-company">
                     <span class="review-company-logo" aria-hidden="true">A</span>
                     <div>
-                        <strong>AI Hub</strong>
-                        <span>aihub.local</span>
+                        <strong>AI Solution</strong>
+                        <span>aisolution.local</span>
                     </div>
                 </div>
             </article>
@@ -169,8 +169,8 @@
                 <div class="review-company">
                     <span class="review-company-logo" aria-hidden="true">A</span>
                     <div>
-                        <strong>AI Hub</strong>
-                        <span>aihub.local</span>
+                        <strong>AI Solution</strong>
+                        <span>aisolution.local</span>
                     </div>
                 </div>
             </article>

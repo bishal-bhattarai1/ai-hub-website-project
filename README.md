@@ -1,6 +1,6 @@
-# AI Hub
+# AI Solution
 
-AI Hub is a Django-based business website and admin dashboard for an AI services company. It includes public pages for services, case studies, reviews, blogs, events, gallery images, contact inquiries, and an optional AI assistant powered by the OpenAI API.
+AI Solution is a Django-based business website and admin dashboard for an AI services company. It includes public pages for services, case studies, reviews, blogs, events, gallery images, contact inquiries, and an optional AI assistant powered by the OpenAI API.
 
 This README is written for beginners who receive this project as a `.zip` file and want to run it on their own computer.
 
@@ -8,7 +8,7 @@ This README is written for beginners who receive this project as a `.zip` file a
 
 | Item | Details |
 | --- | --- |
-| Project name | AI Hub |
+| Project name | AI Solution |
 | Project type | Django web application |
 | Current project version | 1.0.0 |
 | Main framework | Django 5.2.1 |
@@ -24,7 +24,7 @@ This README is written for beginners who receive this project as a `.zip` file a
 
 ```mermaid
 graph TD
-    A[AI Hub System Project] --> B[1. Planning]
+    A[AI Solution System Project] --> B[1. Planning]
     A --> C[2. Design]
     A --> D[3. Frontend Development]
     A --> E[4. Backend Development]
@@ -86,7 +86,7 @@ graph TD
 
 ```mermaid
 graph TD
-    A["AI Hub System Project"]
+    A["AI Solution System Project"]
 
     A --> B["Planning"]
     B --> B1["Requirements Gathering"]
@@ -147,7 +147,7 @@ graph TD
 
 | WBS Code | Work Package | Description |
 | --- | --- | --- |
-| 1.0 | AI Hub System Project | Complete Django-based AI services website and admin dashboard. |
+| 1.0 | AI Solution System Project | Complete Django-based AI services website and admin dashboard. |
 | 1.1 | Planning | Define the project requirements, scope, and required features. |
 | 1.1.1 | Requirements Gathering | Identify website pages, admin features, database needs, and AI assistant requirements. |
 | 1.1.2 | Project Scope | Confirm the public website, admin dashboard, content management, and deployment scope. |
@@ -157,7 +157,7 @@ graph TD
 | 1.2.2 | System Architecture | Define the Django project structure, app structure, URLs, templates, and static files. |
 | 1.2.3 | Database Design | Design models for services, articles, case studies, events, gallery images, reviews, and inquiries. |
 | 1.3 | Frontend Development | Build the public user-facing website pages. |
-| 1.3.1 | Homepage | Develop the main landing page for AI Hub. |
+| 1.3.1 | Homepage | Develop the main landing page for AI Solution. |
 | 1.3.2 | Services Page | Display AI services offered by the company. |
 | 1.3.3 | Case Studies Page | Display completed projects and case study details. |
 | 1.3.4 | Blog Page | Display articles and blog content. |
@@ -550,7 +550,7 @@ erDiagram
 
 ## Main Features
 
-- Public home page for AI Hub.
+- Public home page for AI Solution.
 - Services page with active services.
 - Case studies page with image upload support.
 - Customer review page and public review submission form.
